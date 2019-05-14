@@ -10,6 +10,7 @@ struct MyList {
 };
 int inserToList(int,int,struct MyList**);
 void displayList(struct MyList**);
+struct MyList* reverseList(struct MyList*);
 int main()
 {
     int cont=1;
@@ -30,7 +31,10 @@ int main()
         printf("\n do you want to continue: ");
         scanf("%d",&cont);
     }while(cont);
+    head = reverseList(head);
+    displayList(&head);
 }
+
 
 int inserToList(int data, int p, struct MyList **head){
  
@@ -64,6 +68,16 @@ int inserToList(int data, int p, struct MyList **head){
     return 1;
 }
 
+struct MyList* reverseList(struct MyList *head) {
+    struct MyList *temp=NULL,*nextNode;
+    while(head!=NULL) {
+        nextNode = head->next;
+        head->next=temp;
+        temp=head;
+        head=nextNode;
+    }
+    return temp;
+}
 
 void displayList(struct MyList **head){
     struct MyList *counter = *head;
