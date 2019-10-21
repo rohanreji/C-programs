@@ -1,31 +1,21 @@
 int pivotIndex(int* nums, int numsSize){
-    if(numsSize==0) {
-        return -1;
+    int pivot = -1;
+    if(numsSize==0) return pivot;
+    int preSum[numsSize];
+    int postSum[numsSize];
+    preSum[0]=0;
+    postSum[numsSize-1]=0;
+    for(int i=numsSize-1;i>0;i--){
+        postSum[i-1]=postSum[i]+nums[i];
     }
-    int i=0, j=numsSize-1;
-    int leftSum=0,rightSum=0;
-    int pivot=i;
+    for(int i=0;i<numsSize-1;i++){
+        preSum[i+1]=preSum[i]+nums[i];
+    }
     
-    while(i!=j){
-        pivot=-1;
-        if(leftSum==rightSum){
-            rightSum=rightSum+nums[j];
-            j--;
+    for(int i=0;i<numsSize;i++){
+        if(preSum[i]==postSum[i]){
+            return i;
         }
-        else if(leftSum>rightSum){
-            rightSum=rightSum+nums[j];
-            j--;
-        }
-        else if(leftSum<rightSum){
-            leftSum=leftSum+nums[i];
-            i++;
-        }
-    }
-    if(leftSum == rightSum){
-        pivot=j--;
-    }
-    else{
-        pivot=-1;
     }
     return pivot;
 }
